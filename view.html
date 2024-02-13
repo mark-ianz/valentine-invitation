@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/icon.png" type="image/x-icon" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Hello, cutie!</title>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <main>
+      <div id="invitation">
+        <img
+          src="./assets/716121394a4614c7b2b0f891ff66881a.gif"
+          alt="cute gif"
+          class="gif"
+        />
+        <div id="text-container">
+          <p class="text">Hello<span class="bold" id="name"></span>!</p>
+          <p class="text">Will you be my Valentine?</p>
+        </div>
+        <div class="button-container">
+          <button class="buttons success" id="yes">Yes</button>
+          <img src="./assets/pls.gif" alt="please" class="please-gif gif" />
+          <p id="please">Click it please...</p>
+          <button class="buttons danger" id="no">No</button>
+        </div>
+      </div>
+    </main>
+  </body>
+  <script>
+    $(document).ready(() => {
+      const name = new URLSearchParams(window.location.search).get("name");
+      const sender = new URLSearchParams(window.location.search).get("sender");
+      $("#name").text(name ? " " + name : "");
+
+      let isRepositioned = false;
+
+      $("#no").mouseover(() => {
+        repositionElement($("#no"));
+      });
+
+      $("#no").click(() => {
+        repositionElement($("#no"));
+      });
+
+      function repositionElement(element) {
+        const x = Math.random() * (window.innerWidth - 100 - 20) + 20;
+        const y = Math.random() * (window.innerHeight - 100 - 20) + 20;
+
+        const xIdentifier = () => {
+          if (Math.random() > 0.5) {
+            return "left";
+          } else {
+            return "right";
+          }
+        };
+        const yIdentifier = () => {
+          if (Math.random() > 0.5) {
+            return "top";
+          } else {
+            return "bottom";
+          }
+        };
+
+        if (!isRepositioned) {
+          element.css({
+            position: "fixed",
+            [xIdentifier()]: x + "px",
+            [yIdentifier()]: y + "px",
+          });
+          isRepositioned = true;
+        } else {
+          $("#no").css({
+            position: "static",
+            top: "",
+            bottom: "",
+            left: "",
+            right: "",
+          });
+          isRepositioned = false;
+        }
+      }
+
+      $("#yes").click(() => {
+        $("main").html(
+          `
+        <div id="accept">
+          <img
+          src="./assets/yey.gif"
+          alt="cute gif"
+          class="gif"
+          />
+          <p class="text">Thank you so much ♥♥♥</p>
+          <p class="text">See you<span class="bold" id="name">${
+            name ? " " + name : ""
+          }</span>!!!</p>
+          <p class="text">${sender ? '- ' + sender : ''}</p>
+        </div>
+      `
+        );
+      });
+
+      $("#yes").mouseover(() => {
+        $("#please").show();
+        $(".please-gif").show();
+        $("#no").hide ();
+      });
+
+      $("#yes").mouseleave(() => {
+        $("#please").hide();
+        $(".please-gif").hide();
+        $("#no").show ();
+      });
+    });
+  </script>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="./assets/icon.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css" />
+    <title>Valentines!</title>
+  </head>
+  <body>
+    <main>
+      <div id="invitation">
+        <img
+        src="./assets/love-heart.gif"
+        alt="cute gif"
+        class="gif"
+        />
+        <p class="text">Create a Valentine invitation for your love ones</p>
+        <div class="input-container">
+          <label for="name">
+            To:
+            <input type="text" name="receiver" id="name" placeholder="Input their name...">
+          </label>
+          <label for="sender">
+            From:
+            <input type="text" name="sender" id="sender" placeholder="Input your name...">
+          </label>
+          <button id="submit-button" class="buttons success">
+            Generate Link
+          </button>
+        </div>
+        <div id="link-container">
+          
+        </div>
+      </div>  
+    </main>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      function generateLink () {
+        const input = $("#name").val();
+        const sender = $("#sender").val()
+        $.trim (input);
+
+        /* Validation */
+        if (!input || !sender) return;
+
+        
+        const url = "http://127.0.0.1:3000/view.html?name="+input + "&sender=" + sender;
+
+        displayLink (url);
+      }
+
+      function displayLink (url) {
+        $("#link-container").html (`
+          <p>Here's your link: &nbsp;</p>
+          <a href="${url}" target="_blank">${url}</a>
+          
+        `);
+      }
+
+      $("#submit-button").click (()=> {
+        generateLink ();
+      })
+      $("#name").keydown ((event)=> {
+        if (event.key == 'Enter') generateLink ();
+      });
+      $("#sender").keydown ((event)=> {
+        if (event.key == 'Enter') generateLink ();
+      });
+    </script>
+  </body>
+</html>
