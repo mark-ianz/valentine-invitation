@@ -48,8 +48,8 @@
         /* Validation */
         if (!input || !sender) return;
 
-        
-        const url = "http://127.0.0.1:3000/view.html?name="+input + "&sender=" + sender;
+        const baseURL = "https://valentine-invitation-for-you.netlify.app"; /*  my website deployment */
+        const url = baseURL + "/view?name=" + input + "&sender=" + sender;
 
         displayLink (url);
       }
